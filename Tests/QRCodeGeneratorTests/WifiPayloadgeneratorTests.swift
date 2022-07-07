@@ -54,7 +54,7 @@ final class WifiPayloadgeneratorTests: XCTestCase {
         
         let sut = WiFiPayloadGenerator(ssid: ssid, password: password, authenticationMode: authmode, isHiddenSsid: hideSSID)
         let payload = sut.payload
-        
+
         XCTAssertEqual(payload, "WIFI:T:WPA;S:M\\\\y\\;W\\,i\\:FiSSID;P:7heP4assw0rd\\\\\\;\\:\\,;H:true;")
     }
     

@@ -22,7 +22,7 @@ extension String {
         var res = self
         
         for char in forbiddenChars {
-            res = res.replacingOccurrences(of: "\(char)", with: "\\\(char)")
+            res = res.replacingOccurrences(of: "\(char)", with: "\\" + "\(char)")
         }
         
         return res

@@ -1,5 +1,6 @@
 
 import Foundation
+#if !os(macOS)
 import UIKit
 
 public struct QRCodeGenerator {
@@ -88,3 +89,4 @@ extension QRCodeGenerator {
         case H
     }
 }
+#endif

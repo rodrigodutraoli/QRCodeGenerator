@@ -15,16 +15,19 @@ struct WiFiPayloadGenerator: PayloadGenerator {
     
     init(ssid: String, password: String, authenticationMode: AuthenticationMode, isHiddenSsid: Bool = false, escapeHexStrings: Bool = true){
         
-        print(ssid.escapeInput().isValidHexNumber())
-        self.ssid = escapeHexStrings && ssid.escapeInput().isValidHexNumber() ? "\"" + ssid.escapeInput() + "\"" : ssid.escapeInput()
-        self.password = escapeHexStrings && password.escapeInput().isValidHexNumber() ? "\"" + password.escapeInput() + "\"" : password.escapeInput()
+        let escapedSsid = ssid.escapeInput()
+        let escapedPassword = password.escapeInput()
+        
+        self.ssid = (escapeHexStrings && escapedSsid.isValidHexNumber()) ? ("\"" + escapedSsid + "\"") : escapedSsid
+        self.password = (escapeHexStrings && escapedPassword.isValidHexNumber()) ? ("\"" + escapedPassword + "\"") : escapedPassword
         
         self.authenticationMode = authenticationMode
         self.isHiddenSsid = isHiddenSsid
     }
 
     var payload: String {
-        "WIFI:T:\(self.authenticationMode.rawValue);S:\(self.ssid);P:\(self.password);\((self.isHiddenSsid ? "H:true" : ""));"
+        print(self.ssid)
+        return "WIFI:T:\(self.authenticationMode.rawValue);S:\(self.ssid);P:\(self.password);\((self.isHiddenSsid ? "H:true" : ""));"
     }
     
     enum AuthenticationMode: String {
