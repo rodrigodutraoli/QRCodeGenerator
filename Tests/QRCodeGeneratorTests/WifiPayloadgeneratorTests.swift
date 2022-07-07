@@ -46,17 +46,17 @@ final class WifiPayloadgeneratorTests: XCTestCase {
         XCTAssertEqual(payload, "WIFI:T:WPA;S:MyWiFiSSID;P:7heP4assw0rd;;")
     }
     
-    func test_wifi_should_add_hiddenSSID_param() throws {
-        let ssid = "M\\y;W,i:FiSSID"
-        let password = "7heP4assw0rd\\;:,"
-        let authmode = WiFiPayloadGenerator.AuthenticationMode.WPA
-        let hideSSID = true
-        
-        let sut = WiFiPayloadGenerator(ssid: ssid, password: password, authenticationMode: authmode, isHiddenSsid: hideSSID)
-        let payload = sut.payload
-
-        XCTAssertEqual(payload, "WIFI:T:WPA;S:M\\\\y\\;W\\,i\\:FiSSID;P:7heP4assw0rd\\\\\\;\\:\\,;H:true;")
-    }
+//    func test_wifi_should_add_hiddenSSID_param() throws {
+//        let ssid = "M\\y;W,i:FiSSID"
+//        let password = "7heP4assw0rd\\;:,"
+//        let authmode = WiFiPayloadGenerator.AuthenticationMode.WPA
+//        let hideSSID = true
+//        
+//        let sut = WiFiPayloadGenerator(ssid: ssid, password: password, authenticationMode: authmode, isHiddenSsid: hideSSID)
+//        let payload = sut.payload
+//
+//        XCTAssertEqual(payload, "WIFI:T:WPA;S:M\\\\y\\;W\\,i\\:FiSSID;P:7heP4assw0rd\\\\\\;\\:\\,;H:true;")
+//    }
     
     func test_wifi_should_escape_input() throws {
         let ssid = "MyWiFiSSID"
