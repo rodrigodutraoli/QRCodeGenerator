@@ -13,8 +13,9 @@ struct WiFiPayloadGenerator: PayloadGenerator {
     let authenticationMode: AuthenticationMode
     let isHiddenSsid: Bool
     
-    init(ssid: String, password: String, authenticationMode: AuthenticationMode, isHiddenSsid: Bool, escapeHexStrings: Bool = false){
+    init(ssid: String, password: String, authenticationMode: AuthenticationMode, isHiddenSsid: Bool = false, escapeHexStrings: Bool = true){
         
+        print(ssid.escapeInput().isValidHexNumber())
         self.ssid = escapeHexStrings && ssid.escapeInput().isValidHexNumber() ? "\"" + ssid.escapeInput() + "\"" : ssid.escapeInput()
         self.password = escapeHexStrings && password.escapeInput().isValidHexNumber() ? "\"" + password.escapeInput() + "\"" : password.escapeInput()
         

@@ -9,18 +9,21 @@ import Foundation
 
 extension String {
     func isValidHexNumber() -> Bool {
-        let chars = NSCharacterSet(charactersIn: "0123456789ABCDEF").inverted
-        guard self.uppercased().rangeOfCharacter(from: chars) != nil else {
-            return false
-        }
-        return true
+        isHexNumber
+    }
+    
+    private var isHexNumber: Bool {
+        filter(\.isHexDigit).count == count
     }
     
     func escapeInput(simple: Bool = false) -> String {
         let forbiddenChars: Set<Character> = simple ? [":"] : ["\\", ";", ",", ":"]
         
         var res = self
-        res.removeAll(where: { forbiddenChars.contains($0) } )
+        
+        for char in forbiddenChars {
+            res = res.replacingOccurrences(of: "\(char)", with: "\\\(char)")
+        }
         
         return res
     }
