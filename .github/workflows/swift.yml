@@ -1,19 +1,64 @@
-name: Swift
+name: "QRCodeGenerator"
 
-on:
+on: 
   push:
-    branches: [ "main" ]
+    branches: 
+      - main
+    paths:
+      - 'Source/**'
+      - 'Tests/**'
+      - '.github/workflows/**'
+      - 'Package.swift'
   pull_request:
-    branches: [ "main" ]
+    paths:
+      - 'Source/**'
+      - 'Tests/**'
+      - '.github/workflows/**'
+      - 'Package.swift'
 
+concurrency: 
+  group: ${{ github.ref_name }}
+  cancel-in-progress: true
 jobs:
-  build:
-
-    runs-on: macos-latest
-
+  SPM:
+    name: Test with SPM
+    runs-on: ${{ matrix.runsOn }}
+    env:
+      DEVELOPER_DIR: "/Applications/${{ matrix.xcode }}/Contents/Developer"
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - xcode: "Xcode_13.4.1.app"
+            runsOn: macOS-12
+            name: "macOS 12, SPM 5.6.1 Test"
+            action: swift test -c debug
+          - xcode: "Xcode_13.3.1.app"
+            runsOn: macOS-12
+            name: "macOS 12, SPM 5.6 Test"
+            action: swift test -c debug
+          - xcode: "Xcode_13.2.1.app"
+            runsOn: macOS-11
+            name: "macOS 11, SPM 5.5.2 Test"
+            action: swift test -c debug
+          - xcode: "Xcode_13.1.app"
+            runsOn: macOS-11
+            name: "macOS 11, SPM 5.5.1 Test"
+            action: swift test -c debug
+          - xcode: "Xcode_13.0.app"
+            runsOn: macOS-11
+            name: "macOS 11, SPM 5.5 Test"
+            action: swift test -c debug
+          - xcode: "Xcode_12.5.1.app"
+            runsOn: macOS-11
+            name: "macOS 11, SPM 5.4 Build"
+            action: swift build -c debug
+          - xcode: "Xcode_12.4.app"
+            runsOn: macOS-10.15
+            name: "macOS 10.15, SPM 5.3 Build"
+            action: swift build -c debug
     steps:
-    - uses: actions/checkout@v3
-    - name: Build
-      run: swift build -v
-    - name: Run tests
-      run: swift test -v
+      - uses: actions/checkout@v3
+      - name: Test SPM
+        run: ${{ matrix.action }}
