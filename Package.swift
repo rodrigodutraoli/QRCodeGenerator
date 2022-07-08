@@ -27,5 +27,6 @@ let package = Package(
         .testTarget(
             name: "QRCodeGeneratorTests",
             dependencies: ["QRCodeGenerator"]),
-    ]
+    ],
+    swiftLanguageVersions: [.v5]
 )
